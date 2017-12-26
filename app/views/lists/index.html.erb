@@ -1,0 +1,52 @@
+<html>
+  <body>
+    <div class="container table-striped table-condensed">
+      <br>
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+      <%= yield %>
+      <% debug(params) if Rails.env.development? %>
+    </div>
+  </body>
+</html>
+
+
+<table class = "table table-striped table-condensed">  
+  <tr>
+    <th>#</th>
+    <th>Is done</th>
+    <th>Name</th>
+    <th>Due Date</th>
+    <th>Show</th>
+    <th>Edit</th>
+    <th>Destroy</th>
+  </tr>
+
+  <% @lists.each do |list| %>
+  <tr>
+    <td><%= list.id %></td>
+    <td>
+      <%= check_box_tag :is_done, true , list.is_done, data: { url: is_done_list_path(list), method: :post, remote: true} %>
+    </td>
+    <td><%= list.event %></td>
+    <td><%= list.duedate %></td>
+    <td><%= link_to 'Show', list_path(list)%></td>
+    <td><%= link_to 'Edit', edit_list_path(list)%></td>
+    <% if list.duedate >= Time.now.to_date %>
+      <td><%= link_to 'Destory', list_path(list), method: :delete, data:{ confirm: "Are you sure?" } %></td>
+    <% else %>
+      <td> Expired ! </td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+<button class="btn btn-default" type="submit">
+  <%= link_to 'New Event Button1', new_list_path %>
+</button>
+<br>
+<a class="btn btn-info btn-block" href= lists/new role="button">New Event Button2</a>
+
+
+

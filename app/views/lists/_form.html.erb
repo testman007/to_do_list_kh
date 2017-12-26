@@ -1,0 +1,41 @@
+<div class = "form container">
+  <% if @list.errors.present? %>
+    <ul>
+      <br>
+      <% @list.errors.each do |error, message| %>
+        <li> <%= "#{error.capitalize} #{message}" %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<br>
+<div class="form container alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span></button>
+  <strong>Warning!</strong>  Column Mark With * Must Fill In
+</div>
+
+
+<div class = "form container">
+  <%= form_for @list do |f| %>
+    <br>
+    <form class="form">
+      <div class="form-group">
+        <label for="InputEventName1">Event Name*</label>
+        <%= f.text_field :event, :class=> 'form-control' %>
+      </div>
+      <div class="form-group">
+        <label for="InputDuedate1">Due Date*</label>
+        <%= f.text_field :duedate, :class=> 'form-control' %>
+        <small id="duedateHelp" class="form-text text-muted">Type in Due date to yyyy-MM-dd format.</small>
+      </div>
+      <div class="form-group">
+        <label for="InputDescription1">Description</label>
+        <%= f.text_field :description, :class=> 'form-control' %>
+      </div>
+      <%= f.submit %>
+    </form>
+  <% end %>
+</div>
+
